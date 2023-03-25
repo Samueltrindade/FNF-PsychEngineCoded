@@ -3,7 +3,6 @@ package;
 #if desktop
 import Discord.DiscordClient;
 #end
-import flixel.addons.display.FlxBackdrop; 
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -47,7 +46,6 @@ class MainMenuState extends MusicBeatState
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
-	var checker:FlxBackdrop; 
 
 	override function create()
 	{
@@ -91,14 +89,6 @@ class MainMenuState extends MusicBeatState
 		camFollowPos = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 		add(camFollowPos);
-		
-		checker = new FlxBackdrop(Paths.image('Grid_lmao'), 0.2, 0.2, true, true); 
-//checker.velocity.set(112, 110); 
-checker.updateHitbox(); 
-checker.scrollFactor.set(0, 0); 
-checker.alpha = 1; 
-checker.screenCenter(X); 
-add(checker); 
 
 		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		magenta.scrollFactor.set(0, yScroll);
@@ -189,8 +179,6 @@ add(checker);
 
 	override function update(elapsed:Float)
 	{
-		checker.x += .5*(elapsed/(1/20));
-    checker.y -= 0.16 / (ClientPrefs.framerate / 60);
 		if (FlxG.sound.music.volume < 0.8)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -262,6 +250,8 @@ add(checker);
 									case 'mods':
 										MusicBeatState.switchState(new ModsMenuState());
 									#end
+									case 'awards':
+										MusicBeatState.switchState(new AchievementsMenuState());
 									case 'credits':
 										MusicBeatState.switchState(new CreditsState());
 									case 'options':
